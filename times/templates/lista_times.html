@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Times</title>
+    <link rel="stylesheet" href="{% static 'times/style.css' %}">
+</head>
+<body>
+    <h1>Times de Futebol</h1>
+    <ul>
+        {% for time in times %}
+            <li>{{ time.nome }} - {{ time.cidade }} (Fundado em {{ time.fundacao }})</li>
+        {% empty %}
+            <li>Nenhum time cadastrado.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
