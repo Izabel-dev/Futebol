@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .models import Time
 
 def lista_times(request):
-    return render(request, 'lista_times.html')
+    times = Time.objects.all() 
+    return render(request, 'lista_times.html', {'times': times})  
