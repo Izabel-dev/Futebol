@@ -6,13 +6,56 @@
     <link rel="stylesheet" href="{% static 'times/style.css' %}">
 </head>
 <body>
-    <h1>Times de Futebol</h1>
-    <ul>
-        {% for time in times %}
-            <li>{{ time.nome }} - {{ time.cidade }} (Fundado em {{ time.fundacao }})</li>
-        {% empty %}
-            <li>Nenhum time cadastrado.</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>⚽ Times de Futebol ⚽</h1>
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">Total de Times:</span>
+                <span class="stat-value">{{ times|length }}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Mais Antigo:</span>
+                <span class="stat-value">
+                    {% with times|first as primeiro %}
+                        {{ primeiro.nome }} ({{ primeiro.fundacao|date:"Y" }})
+                    {% endwith %}
+                </span>
+            </div>
+        </div>
+        
+        <div class="table-wrapper">
+            <table class="times-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Time</th>
+                        <th>Cidade</th>
+                        <th>Fundação</th>
+                        <th>Idade</th>
+                        <th>Títulos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for time in times %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td class="time-nome">{{ time.nome }}</td>
+                        <td>{{ time.cidade }}</td>
+                        <td>{{ time.fundacao|date:"d/m/Y" }}</td>
+                        <td>{{ time.fundacao|timesince }}</td>
+                        <td class="titulos">
+                            <span class="titulo-badge">{{ time.titulos_nacionais|default:"0" }} 🏆</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="empty-message">Nenhum time cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
