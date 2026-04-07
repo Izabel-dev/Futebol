@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.shortcuts import redirect
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('times/', include('times.urls')),  # conecta o app times
+    path('', lambda request: redirect('times/')),# conecta o app times
 ]
